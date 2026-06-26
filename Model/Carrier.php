@@ -26,7 +26,7 @@ class Carrier
 {
     public const GATEWAY_KEY = 'klarna_shipping_method_gateway';
     public const CODE        = 'klarna_shipping_method_gateway';
-    public const TITLE       = 'Klarna shipping method gateway';
+    public const TITLE       = 'Kustom shipping method gateway';
 
     /**
      * @var RateResultFactory
@@ -76,7 +76,7 @@ class Carrier
         $method = $this->rateMethodFactory->create();
 
         $method->setCarrier('klarna');
-        $method->setCarrierTitle('Klarna');
+        $method->setCarrierTitle('Kustom');
 
         $method->setMethod('shipping_method_gateway');
 
