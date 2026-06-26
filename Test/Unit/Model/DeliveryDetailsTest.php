@@ -55,7 +55,7 @@ class DeliveryDetailsTest extends TestCase
     protected function setUp(): void
     {
         $mockFactory                 = new MockFactory($this);
-        $objectFactory               = new TestObjectFactory($mockFactory);
+        $objectFactory               = new TestObjectFactory('');
         $this->model                 = $objectFactory->create(DeliveryDetails::class);
         $this->shippingMethodGateway = $mockFactory->create(ShippingMethodGateway::class);
         $this->dependencyMocks       = $objectFactory->getDependencyMocks();

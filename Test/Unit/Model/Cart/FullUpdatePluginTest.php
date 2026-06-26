@@ -185,7 +185,7 @@ class FullUpdatePluginTest extends TestCase
     protected function setUp(): void
     {
         $this->mockFactory           = new MockFactory($this);
-        $objectFactory               = new TestObjectFactory($this->mockFactory);
+        $objectFactory               = new TestObjectFactory('');
         $this->model                 = $objectFactory->create(FullUpdatePlugin::class);
         $this->dependencyMocks       = $objectFactory->getDependencyMocks();
     }

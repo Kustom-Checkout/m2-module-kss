@@ -100,7 +100,7 @@ class ShippingLinePluginTest extends TestCase
     public function setUp(): void
     {
         $mockFactory         = new MockFactory($this);
-        $this->objectFactory = new TestObjectFactory($mockFactory);
+        $this->objectFactory = new TestObjectFactory('');
 
         $this->model           = $this->objectFactory->create(ShippingLinePlugin::class);
         $this->dependencyMocks = $this->objectFactory->getDependencyMocks();

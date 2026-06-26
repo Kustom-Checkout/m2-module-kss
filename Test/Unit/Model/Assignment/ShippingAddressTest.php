@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Klarna Bank AB (publ)
  *
@@ -13,6 +14,7 @@ use Klarna\Base\Test\Unit\Mock\TestObjectFactory;
 use Klarna\Kss\Model\Assignment\ShippingAddress;
 use Klarna\Kss\Model\ShippingMethodGateway;
 use Magento\Framework\DataObject;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -28,9 +30,8 @@ class ShippingAddressTest extends TestCase
      * @var MockFactory
      */
     private MockFactory $mockFactory;
-    /**
-     * @var ShippingMethodGateway
-     */
+
+    #[DataProvider('getShippingInformation')]
     /**
      * @covers ::addKssAddressToShippingAddress
      * @param array $shippingInformation
@@ -61,6 +62,7 @@ class ShippingAddressTest extends TestCase
         static::assertSame($klarnaRequest, $result);
     }
 
+    #[DataProvider('getShippingInformation')]
     /**
      * @covers ::addKssAddressToShippingAddress
      * @param array $shippingInformation
@@ -98,7 +100,7 @@ class ShippingAddressTest extends TestCase
      *
      * @return array
      */
-    public function getShippingInformation(): array
+    public static function getShippingInformation(): array
     {
         return [
             [
@@ -124,7 +126,7 @@ class ShippingAddressTest extends TestCase
     protected function setUp(): void
     {
         $this->mockFactory     = new MockFactory($this);
-        $objectFactory         = new TestObjectFactory($this->mockFactory);
+        $objectFactory         = new TestObjectFactory('');
         $this->model           = $objectFactory->create(ShippingAddress::class);
     }
 }

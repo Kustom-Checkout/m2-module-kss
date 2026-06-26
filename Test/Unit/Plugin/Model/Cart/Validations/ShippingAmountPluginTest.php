@@ -103,7 +103,7 @@ class ShippingAmountPluginTest extends TestCase
     protected function setUp(): void
     {
         $mockFactory           = new MockFactory($this);
-        $objectFactory         = new TestObjectFactory($mockFactory);
+        $objectFactory         = new TestObjectFactory('');
         $this->model           = $objectFactory->create(ShippingAmountPlugin::class);
         $this->dependencyMocks = $objectFactory->getDependencyMocks();
 

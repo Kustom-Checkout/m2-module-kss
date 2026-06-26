@@ -94,7 +94,7 @@ class DiscountTest extends TestCase
     protected function setUp(): void
     {
         $mockFactory           = new MockFactory($this);
-        $objectFactory         = new TestObjectFactory($mockFactory);
+        $objectFactory         = new TestObjectFactory('');
         $this->model           = $objectFactory->create(Discount::class);
         $this->dependencyMocks = $objectFactory->getDependencyMocks();
 
