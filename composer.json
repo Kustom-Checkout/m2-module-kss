@@ -1,13 +1,13 @@
 {
-   "name": "vaimo/kustom-module-kss",
+    "name": "kustom/module-kss",
     "description": "Kustom Shipping Service Magento 2 Extension",
     "type": "magento2-module",
     "license": "Apache-2.0",
-    "version": "3.0.17",
+    "version": "3.1.0",
     "require": {
-        "vaimo/kustom-module-admin-settings": "^1",
-        "vaimo/kustom-module-base": "11.0.*",
-        "vaimo/kustom-module-orderlines": "3.0.*",
+        "kustom/module-admin-settings": "^1",
+        "kustom/module-base": "^11.0",
+        "kustom/module-orderlines": "^3.0",
         "magento/framework": "^103",
         "php": ">=7.4.0"
     },
@@ -15,6 +15,8 @@
         "psr-4": {
             "Klarna\\Kss\\": ""
         },
-        "files": [ "registration.php" ]
+        "files": [
+            "registration.php"
+        ]
     }
 }
