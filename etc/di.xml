@@ -9,6 +9,13 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- PREFERENCES -->
+
+    <preference for="Klarna\Kss\Api\ShippingMethodGatewayRepositoryInterface" type="Klarna\Kss\Model\ShippingMethodGatewayRepository" />
+    <preference for="Klarna\Kss\Api\DeliveryDetailsInterface" type="Klarna\Kss\Model\DeliveryDetails"/>
+
+    <!-- PLUGINS -->
+
     <type name="Klarna\Kco\Model\Api\Builder\Kasper">
         <plugin name="klarna_kss_process_merchant_urls"
                 type="Klarna\Kss\Plugin\ProcessMerchantUrlsPlugin"/>
@@ -36,6 +43,13 @@
                 type="Klarna\Kss\Plugin\Model\Cart\FullUpdatePlugin"/>
     </type>
 
-    <preference for="Klarna\Kss\Api\ShippingMethodGatewayRepositoryInterface" type="Klarna\Kss\Model\ShippingMethodGatewayRepository" />
-    <preference for="Klarna\Kss\Api\DeliveryDetailsInterface" type="Klarna\Kss\Model\DeliveryDetails"/>
+    <!-- SHIPPING METHOD UPDATER -->
+
+    <type name="Klarna\Kco\Model\Cart\ShippingMethodUpdate">
+        <arguments>
+            <argument name="updaterComponents" xsi:type="array">
+                <item name="shipping_service_updater" xsi:type="object">Klarna\Kss\Model\Cart\ShippingMethodUpdate\UpdaterComponent\ShippingServiceUpdater</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
