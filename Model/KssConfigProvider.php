@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Klarna\Kss\Model;
 
 use Klarna\AdminSettings\Model\Configurations\Kco\Checkout;
+use Magento\Framework\App\ObjectManager;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Api\Data\StoreInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -35,14 +36,14 @@ class KssConfigProvider
 
     /**
      * @param ScopeConfigInterface $scopeConfig
-     * @param Checkout $checkoutConfig
+     * @param Checkout|null $checkoutConfig
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        Checkout $checkoutConfig
+        ?Checkout $checkoutConfig = null
     ) {
         $this->scopeConfig = $scopeConfig;
-        $this->checkoutConfig = $checkoutConfig;
+        $this->checkoutConfig = $checkoutConfig ?: ObjectManager::getInstance()->get(Checkout::class);
     }
 
     /**
@@ -65,5 +66,18 @@ class KssConfigProvider
             ScopeInterface::SCOPE_STORES,
             $store
         );
+    }
+
+    /**
+     * There are various pieces of logic that are relevant to execute when KSS is turned on, but not when
+     * full checkout is turned on. This is intended for helping do that check without duplicating this.
+     *
+     * @param StoreInterface $store
+     *
+     * @return bool
+     */
+    public function isKssAdjustmentsRelevant(StoreInterface $store): bool
+    {
+        return $this->isKssEnabled($store) && !$this->checkoutConfig->isUseFullCheckout($store);
     }
 }

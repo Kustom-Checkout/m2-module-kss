@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Copyright © Klarna Bank AB (publ)
  *
  * For the full copyright and license information, please view the NOTICE
  * and LICENSE files that were distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace Klarna\Kss\Plugin;
@@ -24,6 +26,7 @@ class KasperPlugin
      * @var KssConfigProvider
      */
     private $config;
+
     /**
      * @var DataConverter
      */
@@ -31,12 +34,13 @@ class KasperPlugin
 
     /**
      * @param KssConfigProvider $config
-     * @param DataConverter     $dataConverter
-     * @codeCoverageIgnore
+     * @param DataConverter $dataConverter
      */
-    public function __construct(KssConfigProvider $config, DataConverter $dataConverter)
-    {
-        $this->config        = $config;
+    public function __construct(
+        KssConfigProvider $config,
+        DataConverter $dataConverter
+    ) {
+        $this->config = $config;
         $this->dataConverter = $dataConverter;
     }
 
@@ -75,11 +79,11 @@ class KasperPlugin
     }
 
     /**
-     * Updating the values for different request types
+     * Updating the values for different request types, but only if KSS is turned on and full checkout is not
      *
      * @param BuilderInterface $subject
      * @param BuilderInterface $result
-     * @param CartInterface    $quote
+     * @param CartInterface $quote
      * @return BuilderInterface
      */
     private function updateValues(
@@ -87,7 +91,7 @@ class KasperPlugin
         BuilderInterface $result,
         CartInterface $quote
     ): BuilderInterface {
-        if (!$this->config->isKssEnabled($quote->getStore())) {
+        if (!$this->config->isKssAdjustmentsRelevant($quote->getStore())) {
             return $result;
         }
 

@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Klarna\Kss\Plugin;
 
-use Klarna\AdminSettings\Model\Configurations\Kco\Checkout;
 use Klarna\Base\Api\BuilderInterface;
 use Klarna\Kss\Model\KssConfigProvider;
 use Magento\Store\Api\Data\StoreInterface;
@@ -27,20 +26,12 @@ class ProcessMerchantUrlsPlugin
     private $config;
 
     /**
-     * @var Checkout
-     */
-    private $checkoutConfig;
-
-    /**
      * @param KssConfigProvider $config
-     * @param Checkout $checkoutConfig
      */
     public function __construct(
-        KssConfigProvider $config,
-        Checkout $checkoutConfig
+        KssConfigProvider $config
     ) {
         $this->config = $config;
-        $this->checkoutConfig = $checkoutConfig;
     }
 
     /**
@@ -60,7 +51,7 @@ class ProcessMerchantUrlsPlugin
      */
     public function afterProcessMerchantUrls(BuilderInterface $subject, $result, $store, $urlParams): array
     {
-        if ($this->config->isKssEnabled($store) && !$this->checkoutConfig->isUseFullCheckout($store)) {
+        if ($this->config->isKssAdjustmentsRelevant($store)) {
             unset($result['shipping_option_update']);
         }
 

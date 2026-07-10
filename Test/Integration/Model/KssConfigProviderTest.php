@@ -94,4 +94,52 @@ class KssConfigProviderTest extends TestCase
     {
         $this->assertFalse($this->configProvider->isKssEnabled($this->storeManager->getStore()));
     }
+
+    /**
+     * @magentoAppArea frontend
+     * @magentoAppIsolation enabled
+     * @magentoDbIsolation enabled
+     * @magentoConfigFixture current_store payment/klarna_kss/enabled 1
+     * @magentoConfigFixture current_store checkout/klarna_kco/use_full_checkout 1
+     */
+    public function testIsKssAdjustmentsRelevantShouldReturnFalseWithKssAndFullCheckoutOn(): void
+    {
+        $this->assertFalse($this->configProvider->isKssAdjustmentsRelevant($this->storeManager->getStore()));
+    }
+
+    /**
+     * @magentoAppArea frontend
+     * @magentoAppIsolation enabled
+     * @magentoDbIsolation enabled
+     * @magentoConfigFixture current_store payment/klarna_kss/enabled 1
+     * @magentoConfigFixture current_store checkout/klarna_kco/use_full_checkout 0
+     */
+    public function testIsKssAdjustmentsRelevantShouldReturnTrueWithKssAndFullCheckoutOff(): void
+    {
+        $this->assertTrue($this->configProvider->isKssAdjustmentsRelevant($this->storeManager->getStore()));
+    }
+
+    /**
+     * @magentoAppArea frontend
+     * @magentoAppIsolation enabled
+     * @magentoDbIsolation enabled
+     * @magentoConfigFixture current_store payment/klarna_kss/enabled 0
+     * @magentoConfigFixture current_store checkout/klarna_kco/use_full_checkout 1
+     */
+    public function testIsKssAdjustmentsRelevantShouldReturnFalseWithOnlyFullCheckoutOn(): void
+    {
+        $this->assertFalse($this->configProvider->isKssAdjustmentsRelevant($this->storeManager->getStore()));
+    }
+
+    /**
+     * @magentoAppArea frontend
+     * @magentoAppIsolation enabled
+     * @magentoDbIsolation enabled
+     * @magentoConfigFixture current_store payment/klarna_kss/enabled 0
+     * @magentoConfigFixture current_store checkout/klarna_kco/use_full_checkout 0
+     */
+    public function testIsKssAdjustmentsRelevantShouldReturnFalseWithBothConfigsOff(): void
+    {
+        $this->assertFalse($this->configProvider->isKssAdjustmentsRelevant($this->storeManager->getStore()));
+    }
 }
