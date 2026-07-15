@@ -82,7 +82,7 @@ class ShippingServiceUpdater implements UpdaterComponentInterface
      *
      * @inheritDoc
      */
-    public function getSortOrder(): int
+    public function getSortOrder(): ?int
     {
         return 50;
     }
