@@ -78,9 +78,9 @@ class ShippingServiceUpdater implements UpdaterComponentInterface
     }
 
     /**
-     * Should ensure that this is executed before DefaultUpdater
-     *
      * @inheritDoc
+     *
+     * Should ensure that this is executed before DefaultUpdater
      */
     public function getSortOrder(): ?int
     {
@@ -88,12 +88,12 @@ class ShippingServiceUpdater implements UpdaterComponentInterface
     }
 
     /**
-     * Main use case for this is full checkout, but this depends on KSS setting since that one follows full checkout
-     * setting anyway, and eventually we could consider replacing kco/api/updateKssStatus and kco/api/updateKssDiscountOrder
-     * with kco/api/shippingMethodUpdate, which calls to this logic. So KSS could also do the updates through this
-     * logic, but this needs more work.
-     *
      * @inheritDoc
+     *
+     * Main use case for this is full checkout, but this depends on KSS setting since that one follows full checkout
+     * setting anyway, and eventually we could consider replacing kco/api/updateKssStatus and
+     * kco/api/updateKssDiscountOrder with kco/api/shippingMethodUpdate, which calls to this logic. So KSS could also
+     * do the updates through this logic, but this needs more work.
      */
     public function executeByData(DataObject $data): int
     {
