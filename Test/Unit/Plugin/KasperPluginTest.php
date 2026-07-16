@@ -74,7 +74,7 @@ class KasperPluginTest extends TestCase
             ->willReturn($store);
 
         $this->dependencyMocks['config']
-            ->method('isKssEnabled')
+            ->method('isKssAdjustmentsRelevant')
             ->willReturn(false);
 
         $subject
@@ -210,7 +210,7 @@ class KasperPluginTest extends TestCase
             ->willReturn($shippingAddress);
 
         $this->dependencyMocks['config']
-            ->method('isKssEnabled')
+            ->method('isKssAdjustmentsRelevant')
             ->willReturn(true);
 
         $this->dependencyMocks['dataConverter']

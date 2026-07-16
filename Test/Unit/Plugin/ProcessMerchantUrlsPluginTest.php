@@ -47,7 +47,7 @@ class ProcessMerchantUrlsPluginTest extends TestCase
         $result = [
             'shipping_option_update' => 'some URL'
         ];
-        $this->dependencyMocks['config']->expects($this->once())->method('isKssEnabled')->willReturn(false);
+        $this->dependencyMocks['config']->expects($this->once())->method('isKssAdjustmentsRelevant')->willReturn(false);
         $this->assertArrayHasKey(
             'shipping_option_update',
             $this->model->afterProcessMerchantUrls($this->kasper, $result, $this->store, [])
@@ -62,7 +62,7 @@ class ProcessMerchantUrlsPluginTest extends TestCase
         $result = [
             'shipping_option_update' => 'some URL'
         ];
-        $this->dependencyMocks['config']->expects($this->once())->method('isKssEnabled')->willReturn(true);
+        $this->dependencyMocks['config']->expects($this->once())->method('isKssAdjustmentsRelevant')->willReturn(true);
         $this->assertArrayNotHasKey(
             'shipping_option_update',
             $this->model->afterProcessMerchantUrls($this->kasper, $result, $this->store, [])
