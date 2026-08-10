@@ -16,6 +16,8 @@ use Magento\Quote\Api\Data\CartInterface;
 use Klarna\Orderlines\Model\Items\Discount\Handler as OrderLineDiscount;
 
 /**
+ * TODO: This is not hooked to right class, should it be or should we remove this?
+ *
  * @internal
  */
 class Discount

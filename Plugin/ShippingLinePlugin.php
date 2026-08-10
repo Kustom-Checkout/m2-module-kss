@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Copyright © Klarna Bank AB (publ)
  *
  * For the full copyright and license information, please view the NOTICE
  * and LICENSE files that were distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace Klarna\Kss\Plugin;
@@ -27,7 +29,6 @@ class ShippingLinePlugin
 
     /**
      * @param KssConfigProvider $config
-     * @codeCoverageIgnore
      */
     public function __construct(KssConfigProvider $config)
     {
@@ -35,7 +36,7 @@ class ShippingLinePlugin
     }
 
     /**
-     * Disable the shipping line for pre-purchase requests when KSS is enabled
+     * Disable the shipping line for pre-purchase requests when KSS is enabled, unless full checkout is used
      *
      * @param Handler $subject
      * @param Parameter $parameter
@@ -50,12 +51,13 @@ class ShippingLinePlugin
         DataHolder $dataHolder,
         CartInterface $quote
     ): array {
-        if ($this->config->isKssEnabled($quote->getStore())) {
+        if ($this->config->isKssAdjustmentsRelevant($quote->getStore())) {
             $parameter->setShippingLineEnabled(false);
             $totals = $dataHolder->getTotals();
             unset($totals['shipping']);
             $dataHolder->setTotals($totals);
         }
+
         return [$parameter, $dataHolder, $quote];
     }
 }
