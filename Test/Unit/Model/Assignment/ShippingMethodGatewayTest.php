@@ -56,6 +56,61 @@ class ShippingMethodGatewayTest extends TestCase
             ->willReturn(0.0);
         $this->shippingMethodGatewayTable->expects(static::once())
             ->method('setPickUpPointName')
+            ->with($shippingInformation['delivery_details']['pickup_location']['name']);
+        $result = $this->model->assignByKlarnaInstance($this->shippingMethodGatewayTable, $dataObject);
+
+        static::assertSame($this->shippingMethodGatewayTable, $result);
+    }
+
+    #[DataProvider('getShippingInformation')]
+    /**
+     * Covers PickUpStore/BoxUnreg (and any other shipping_method) as long as a pickup_location is present.
+     *
+     * @covers ::assignByKlarnaInstance
+     * @param array $shippingInformation
+     * @dataProvider getShippingInformation
+     */
+    public function testAssignByKlarnaInstanceDetectsPickupLocationRegardlessOfShippingMethod(
+        array $shippingInformation
+    ): void {
+        $shippingInformation['shipping_method'] = 'BoxUnreg';
+        $dataObject = $this->mockFactory->create(DataObject::class, [], ['getSelectedShippingOption']);
+
+        $dataObject->method('getSelectedShippingOption')
+            ->willReturn($shippingInformation);
+
+        $this->dependencyMocks['dataConverter']->method('toShopFloat')
+            ->willReturn(0.0);
+        $this->shippingMethodGatewayTable->expects(static::once())
+            ->method('setPickUpPointFlag')
+            ->with(true);
+        $this->shippingMethodGatewayTable->expects(static::once())
+            ->method('setPickUpPointName')
+            ->with($shippingInformation['delivery_details']['pickup_location']['name']);
+        $result = $this->model->assignByKlarnaInstance($this->shippingMethodGatewayTable, $dataObject);
+
+        static::assertSame($this->shippingMethodGatewayTable, $result);
+    }
+
+    #[DataProvider('getShippingInformation')]
+    /**
+     * @covers ::assignByKlarnaInstance
+     * @param array $shippingInformation
+     * @dataProvider getShippingInformation
+     */
+    public function testAssignByKlarnaInstanceFallsBackToNameWhenPickupLocationNameMissing(
+        array $shippingInformation
+    ): void {
+        unset($shippingInformation['delivery_details']['pickup_location']['name']);
+        $dataObject = $this->mockFactory->create(DataObject::class, [], ['getSelectedShippingOption']);
+
+        $dataObject->method('getSelectedShippingOption')
+            ->willReturn($shippingInformation);
+
+        $this->dependencyMocks['dataConverter']->method('toShopFloat')
+            ->willReturn(0.0);
+        $this->shippingMethodGatewayTable->expects(static::once())
+            ->method('setPickUpPointName')
             ->with($shippingInformation['name']);
         $result = $this->model->assignByKlarnaInstance($this->shippingMethodGatewayTable, $dataObject);
 
@@ -70,7 +125,8 @@ class ShippingMethodGatewayTest extends TestCase
      */
     public function testAssignByKlarnaInstanceMethodIsNoPickupPoint(array $shippingInformation): void
     {
-        $shippingInformation['shipping_method'] = 'No Pickup point';
+        $shippingInformation['shipping_method'] = 'Home';
+        unset($shippingInformation['delivery_details']['pickup_location']);
         $dataObject = $this->mockFactory->create(DataObject::class, [], ['getSelectedShippingOption']);
 
         $dataObject->method('getSelectedShippingOption')
@@ -78,9 +134,11 @@ class ShippingMethodGatewayTest extends TestCase
 
         $this->dependencyMocks['dataConverter']->method('toShopFloat')
             ->willReturn(0.0);
+        $this->shippingMethodGatewayTable->expects(static::once())
+            ->method('setPickUpPointFlag')
+            ->with(false);
         $this->shippingMethodGatewayTable->expects(static::never())
-            ->method('setPickUpPointName')
-            ->with($shippingInformation['name']);
+            ->method('setPickUpPointName');
         $result = $this->model->assignByKlarnaInstance($this->shippingMethodGatewayTable, $dataObject);
 
         static::assertSame($this->shippingMethodGatewayTable, $result);
@@ -104,6 +162,7 @@ class ShippingMethodGatewayTest extends TestCase
                     'shipping_method' => 'PickUpPoint',
                     'delivery_details' => [
                         'pickup_location' => [
+                            'name' => 'my pickup point name',
                             'address' => [
                                 'street' => 'my shipping information street'
                             ]

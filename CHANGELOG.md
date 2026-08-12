@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.1.1 / 2026-08-12
+
+### Breaking changes
+
+* None
+
+### Features / changes
+
+* None
+
+### Fixes
+
+* KUSTOM-89: Fixed pickup point detection in `Assignment\ShippingMethodGateway::assignByKlarnaInstance()` to
+  trigger on presence of `delivery_details.pickup_location` instead of matching only `shipping_method ===
+  'PickUpPoint'` (missed `PickUpStore`/`BoxUnreg` and other pickup-carrying methods), and corrected the pickup
+  point name to be read from `delivery_details.pickup_location.name` instead of the generic shipping option name.
+
 ## 3.1.0 / 2026-06-24
 
 ### Breaking changes
