@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.2.0 / 2026-08-14
+
+### Breaking changes
+
+* None
+
+### Features / changes
+
+* KUSTOM-96: Support for the full checkout feature
+
+### Fixes
+
+* None
+
 ## 3.1.0 / 2026-06-24
 
 ### Breaking changes
