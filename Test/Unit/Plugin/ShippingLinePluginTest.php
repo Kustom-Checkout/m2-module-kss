@@ -63,7 +63,7 @@ class ShippingLinePluginTest extends TestCase
      */
     public function testOrderLinesHasShippingLine(): void
     {
-        $this->dependencyMocks['config']->expects($this->once())->method('isKssEnabled')->willReturn(false);
+        $this->dependencyMocks['config']->expects($this->once())->method('isKssAdjustmentsRelevant')->willReturn(false);
         $this->model->beforeCollectPrePurchase($this->shipping, $this->parameter, $this->dataHolder, $this->quote);
         self::assertArrayHasKey('shipping', $this->totals);
     }
@@ -73,7 +73,7 @@ class ShippingLinePluginTest extends TestCase
      */
     public function testOrderLinesDoesNotHaveShippingLine(): void
     {
-        $this->dependencyMocks['config']->expects($this->once())->method('isKssEnabled')->willReturn(true);
+        $this->dependencyMocks['config']->expects($this->once())->method('isKssAdjustmentsRelevant')->willReturn(true);
         $this->model->beforeCollectPrePurchase($this->shipping, $this->parameter, $this->dataHolder, $this->quote);
         self::assertArrayNotHasKey('shipping', $this->totals);
     }
