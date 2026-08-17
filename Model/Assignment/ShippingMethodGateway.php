@@ -54,7 +54,6 @@ class ShippingMethodGateway
 
         $shippingMethodGateway->setPickUpPointFlag(false);
         $pickupLoc = $shippingInformation['delivery_details']['pickup_location'] ?? null;
-
         if ($pickupLoc) {
             $shippingMethodGateway->setPickUpPointFlag(true);
             $shippingMethodGateway->setPickUpPointName($pickupLoc['name'] ?? $shippingInformation['name']);
