@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.2.1 / 2026-08-14
+
+### Breaking changes
+
+* None
+
+### Features / changes
+
+* None
+
+### Fixes
+
+* KUSTOM-89: Fixed an issue where certain pickup point delivery methods (e.g. PickUpStore, BoxUnreg) 
+  weren't being recognized during Kustom checkout, and corrected the pickup point name shown to customers 
+  to reflect the actual location instead of a generic shipping method name.
+
 ## 3.2.0 / 2026-08-14
 
 ### Breaking changes

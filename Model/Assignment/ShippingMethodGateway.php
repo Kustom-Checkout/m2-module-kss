@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © Klarna Bank AB (publ)
+ * Copyright © Kustom AB (Originally developed by Klarna Bank AB)
  *
  * For the full copyright and license information, please view the NOTICE
  * and LICENSE files that were distributed with this source code.
@@ -53,9 +53,10 @@ class ShippingMethodGateway
         $shippingMethodGateway->setName($shippingInformation['name']);
 
         $shippingMethodGateway->setPickUpPointFlag(false);
-        if ($shippingInformation['shipping_method'] === 'PickUpPoint') {
+        $pickupLoc = $shippingInformation['delivery_details']['pickup_location'] ?? null;
+        if ($pickupLoc) {
             $shippingMethodGateway->setPickUpPointFlag(true);
-            $shippingMethodGateway->setPickUpPointName($shippingInformation['name']);
+            $shippingMethodGateway->setPickUpPointName($pickupLoc['name'] ?? $shippingInformation['name']);
         }
 
         $shippingMethodGateway->setIsActive(true);
