@@ -47,10 +47,7 @@ class ShippingMethodGatewayTest extends TestCase
      */
     public function testAssignByKlarnaInstanceMethodIsPickupPoint(array $shippingInformation): void
     {
-        $dataObject = $this->mockFactory->create(DataObject::class, [], ['getSelectedShippingOption']);
-
-        $dataObject->method('getSelectedShippingOption')
-            ->willReturn($shippingInformation);
+        $dataObject = new DataObject(['selected_shipping_option' => $shippingInformation]);
 
         $this->dependencyMocks['dataConverter']->method('toShopFloat')
             ->willReturn(0.0);
@@ -74,13 +71,11 @@ class ShippingMethodGatewayTest extends TestCase
         array $shippingInformation
     ): void {
         $shippingInformation['shipping_method'] = 'BoxUnreg';
-        $dataObject = $this->mockFactory->create(DataObject::class, [], ['getSelectedShippingOption']);
-
-        $dataObject->method('getSelectedShippingOption')
-            ->willReturn($shippingInformation);
+        $dataObject = new DataObject(['selected_shipping_option' => $shippingInformation]);
 
         $this->dependencyMocks['dataConverter']->method('toShopFloat')
             ->willReturn(0.0);
+
         $this->shippingMethodGatewayTable->expects(static::once())
             ->method('setPickUpPointFlag')
             ->with(true);
@@ -102,10 +97,7 @@ class ShippingMethodGatewayTest extends TestCase
         array $shippingInformation
     ): void {
         unset($shippingInformation['delivery_details']['pickup_location']['name']);
-        $dataObject = $this->mockFactory->create(DataObject::class, [], ['getSelectedShippingOption']);
-
-        $dataObject->method('getSelectedShippingOption')
-            ->willReturn($shippingInformation);
+        $dataObject = new DataObject(['selected_shipping_option' => $shippingInformation]);
 
         $this->dependencyMocks['dataConverter']->method('toShopFloat')
             ->willReturn(0.0);
@@ -127,10 +119,7 @@ class ShippingMethodGatewayTest extends TestCase
     {
         $shippingInformation['shipping_method'] = 'Home';
         unset($shippingInformation['delivery_details']['pickup_location']);
-        $dataObject = $this->mockFactory->create(DataObject::class, [], ['getSelectedShippingOption']);
-
-        $dataObject->method('getSelectedShippingOption')
-            ->willReturn($shippingInformation);
+        $dataObject = new DataObject(['selected_shipping_option' => $shippingInformation]);
 
         $this->dependencyMocks['dataConverter']->method('toShopFloat')
             ->willReturn(0.0);
