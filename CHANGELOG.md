@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.2.1 / 2026-10-08
+
+### Breaking changes
+* None
+
+### Features / changes
+* None
+
+### Fixes
+
+* KUSTOM-122: Fix PHPUnit tests
+
 ## 3.2.0 / 2026-08-19
 
 ### Breaking changes
