@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.2.2 / 2026-10-12
+
+### Breaking changes
+* None
+
+### Features / changes
+* KUSTOM-118: Added compatibility with module-admin-settings 2.x
+
+### Fixes
+* None
+
 ## 3.2.1 / 2026-10-08
 
 ### Breaking changes
